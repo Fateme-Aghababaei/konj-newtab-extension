@@ -1,8 +1,19 @@
+import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import tailwindcss from '@tailwindcss/vite'
+import { crx } from '@crxjs/vite-plugin'
+import manifest from './manifest.config.ts'
 
-// https://vite.dev/config/
-export default defineConfig({
-  plugins: [vue(), tailwindcss()],
-})
+export default defineConfig(({ command, mode }) => ({
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
+  plugins: [
+    vue(),
+    tailwindcss(),
+    ...(command === 'build' || mode === 'extension' ? [crx({ manifest })] : []),
+  ],
+}))

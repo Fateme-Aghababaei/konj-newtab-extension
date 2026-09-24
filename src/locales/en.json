@@ -1,0 +1,154 @@
+{
+  "brand": {
+    "name": "Konj",
+    "tagline": "A little space for you",
+    "home": "Konj home"
+  },
+  "nav": {
+    "tools": "Dashboard tools",
+    "add": "Add widget",
+    "edit": "Edit layout",
+    "done": "Done editing",
+    "settings": "Settings"
+  },
+  "welcome": {
+    "kicker": "A new tab, a fresh start",
+    "subtitle": "A little calmer. A little more you.",
+    "morning": "Good morning",
+    "day": "Have a lovely day",
+    "evening": "Good evening",
+    "night": "Have a peaceful night",
+    "comma": ", "
+  },
+  "dashboard": {
+    "edit": "Make it your own",
+    "title": "Your corner",
+    "hint": "Drag a title to move; drag a corner to resize.",
+    "subtitle": "Little things, brighter days",
+    "unavailable": "Storage unavailable",
+    "personal": "Your personal space",
+    "keyboard": "Use each widget’s up and down buttons to reorder with a keyboard or on mobile."
+  },
+  "footer": {
+    "text": "For the moments between work and life",
+    "personalize": "Make yourself at home"
+  },
+  "notice": {
+    "removed": "Widget removed. You can undo this.",
+    "removedShort": "Widget removed.",
+    "restored": "Widget restored.",
+    "added": "{title} added to your dashboard."
+  },
+  "common": {
+    "undo": "Undo",
+    "dismiss": "Dismiss message",
+    "close": "Close",
+    "add": "Add",
+    "save": "Save",
+    "cancel": "Cancel",
+    "remove": "Remove {title}"
+  },
+  "panel": {
+    "kicker": "Just the way you like it",
+    "widgets": "Add something good",
+    "settings": "Your very own Konj",
+    "description": "Small widgets for a better day. Rearrange them whenever you like.",
+    "count": "{count} on your dashboard",
+    "offline": "All widgets work offline, except search and links."
+  },
+  "settings": {
+    "name": "What should we call you?",
+    "namePlaceholder": "Your name (optional)",
+    "theme": "Set the mood",
+    "dusk": "Desert dusk",
+    "forest": "Forest mist",
+    "night": "Indigo night",
+    "timeZone": "Time zone",
+    "tehran": "Tehran",
+    "local": "My device’s time",
+    "opaque": "Reduce transparency",
+    "opaqueHint": "More opaque surfaces for easier reading",
+    "privacy": "Your layout, notes and settings are saved automatically in this browser only. Search is powered by Google.",
+    "language": "Language",
+    "carpet": "Persian carpet",
+    "tea": "Amber tea",
+    "sea": "Caspian blue"
+  },
+  "empty": {
+    "title": "This corner is yours",
+    "hint": "Add your first widget and make yourself at home."
+  },
+  "grid": {
+    "poetry": "A moment of poetry",
+    "previous": "Move earlier",
+    "next": "Move later",
+    "resize": "Resize {title}",
+    "resizeHint": "Drag or use the arrow keys to resize"
+  },
+  "clock": {
+    "tehran": "Tehran time",
+    "local": "Device time"
+  },
+  "poem": {
+    "source": "From the Divan of Hafez",
+    "next": "Another couplet"
+  },
+  "todo": {
+    "empty": "Room for a fresh start",
+    "hint": "Write down your first step for today.",
+    "placeholder": "A new task…",
+    "input": "New task",
+    "add": "Add task",
+    "count": "{done} of {total} tasks completed"
+  },
+  "links": {
+    "name": "Site name",
+    "url": "Site address",
+    "invalid": "Enter a name and a valid website address.",
+    "edit": "Edit shortcuts",
+    "done": "Done editing shortcuts",
+    "wiki": "Wikipedia",
+    "aparat": "Aparat",
+    "github": "GitHub"
+  },
+  "note": {
+    "label": "Little note",
+    "placeholder": "Give your thoughts a little room…",
+    "hint": "Just for you, right here."
+  },
+  "search": {
+    "label": "Search Google",
+    "placeholder": "What are you looking for today?",
+    "submit": "Search"
+  },
+  "storage": {
+    "read": "Saved data could not be read. To protect it, changes in this session will not be saved.",
+    "write": "Changes could not be saved. Check your browser’s storage."
+  },
+  "widgets": {
+    "clock": {
+      "title": "Clock & calendar",
+      "description": "The time, with a Persian calendar date."
+    },
+    "hafez": {
+      "title": "A moment with Hafez",
+      "description": "Pause, take a breath, and enjoy Persian poetry."
+    },
+    "todo": {
+      "title": "Today’s tasks",
+      "description": "Small steps for the day ahead."
+    },
+    "quick-links": {
+      "title": "Shortcuts",
+      "description": "Your favorite sites, just a click away."
+    },
+    "greeting": {
+      "title": "Little note",
+      "description": "A thought, a sentence, or something to remember."
+    },
+    "search": {
+      "title": "Search",
+      "description": "A quick way to find what’s on your mind."
+    }
+  }
+}
