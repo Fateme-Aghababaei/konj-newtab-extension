@@ -5,6 +5,11 @@ import type { WidgetInstance } from '@/types/widget'
 import { useWidgetsStore } from '@/stores/widgets'
 import AppIcon from '@/components/ui/AppIcon.vue'
 import SearchBox from '@/components/ui/SearchBox.vue'
+import PomodoroWidget from './extras/PomodoroWidget.vue'
+import CalendarWidget from './extras/CalendarWidget.vue'
+import WeatherWidget from './extras/WeatherWidget.vue'
+import CountdownWidget from './extras/CountdownWidget.vue'
+import AmbientWidget from './extras/AmbientWidget.vue'
 import { poems } from '@/data/poems'
 const { t, locale } = useI18n()
 const props = defineProps<{ widget: WidgetInstance }>()
@@ -48,7 +53,12 @@ function addLink() {
 const managingLinks = ref(false)
 </script>
 <template>
-  <div v-if="widget.type === 'clock'" class="clock-content">
+  <PomodoroWidget v-if="widget.type === 'pomodoro'" :widget="widget" />
+  <CalendarWidget v-else-if="widget.type === 'calendar'" :widget="widget" />
+  <WeatherWidget v-else-if="widget.type === 'weather'" :widget="widget" />
+  <CountdownWidget v-else-if="widget.type === 'countdown'" :widget="widget" />
+  <AmbientWidget v-else-if="widget.type === 'ambient'" :widget="widget" />
+  <div v-else-if="widget.type === 'clock'" class="clock-content">
     <div class="clock-time" dir="ltr">{{ time }}</div><div class="persian-date">{{ date }}</div><div class="western-date" dir="ltr">{{ westernDate }}</div>
     <span class="timezone"><span class="status-dot" />{{ zone ? t('clock.tehran') : t('clock.local') }}</span>
   </div>

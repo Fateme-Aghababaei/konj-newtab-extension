@@ -54,7 +54,7 @@
     "settings": "Your very own Konj",
     "description": "Small widgets for a better day. Rearrange them whenever you like.",
     "count": "{count} on your dashboard",
-    "offline": "All widgets work offline, except search and links."
+    "offline": "Weather, search and external links need an internet connection. Other widgets work offline."
   },
   "settings": {
     "name": "What should we call you?",
@@ -149,6 +149,73 @@
     "search": {
       "title": "Search",
       "description": "A quick way to find what’s on your mind."
+    },
+    "pomodoro": {
+      "title": "Pomodoro timer",
+      "description": "Focus, then pause for a short break."
+    },
+    "calendar": {
+      "title": "Calendar & occasions",
+      "description": "Persian and Gregorian months with your personal occasions."
+    },
+    "weather": {
+      "title": "Weather",
+      "description": "Current weather for a city you choose."
+    },
+    "countdown": {
+      "title": "Countdown",
+      "description": "Count the days to something special."
+    },
+    "ambient": {
+      "title": "Ambient sounds",
+      "description": "Rain, sea, and brown noise for a calmer space."
     }
+  },
+  "extras": {
+    "focus": "Focus",
+    "break": "Short break",
+    "sessionDone": "Session complete. Ready for the next one?",
+    "timerHint": "25 minutes of focus, 5 minutes of rest.",
+    "pause": "Pause",
+    "start": "Start",
+    "reset": "Reset",
+    "eventTitle": "Event name",
+    "date": "Date (Gregorian input)",
+    "today": "Today!",
+    "daysAgo": "days since",
+    "daysLeft": "days to go",
+    "editEvent": "Edit event",
+    "rain": "Rain",
+    "sea": "Sea",
+    "brown": "Brown noise",
+    "play": "Play",
+    "volume": "Volume",
+    "synthesized": "Generated soundscapes · available offline",
+    "audioError": "Audio could not start. Try Play again.",
+    "persian": "Persian",
+    "gregory": "Gregorian",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "addOccasion": "Add occasion",
+    "upcoming": "Upcoming occasions",
+    "noOccasions": "No upcoming occasions. Choose a day to add one.",
+    "noCities": "No cities found. Try another spelling.",
+    "weatherError": "Weather unavailable. Check your connection and try again.",
+    "city": "City",
+    "cityPlaceholder": "Search for your city",
+    "weatherPrivacy": "City searches and weather requests are sent to Open-Meteo.",
+    "clear": "Clear sky",
+    "cloudy": "Cloudy",
+    "fog": "Foggy",
+    "snow": "Snow",
+    "storm": "Thunderstorm",
+    "rainy": "Rain",
+    "unknownWeather": "Current conditions",
+    "wind": "Wind {speed} km/h",
+    "updated": "Updated {time}",
+    "refresh": "Refresh",
+    "changeCity": "Change city",
+    "loading": "Loading…",
+    "weatherCredit": "Weather by Open-Meteo"
   }
 }

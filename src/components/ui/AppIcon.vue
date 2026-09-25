@@ -1,6 +1,11 @@
 <script setup lang="ts">
 withDefaults(defineProps<{ name: string; size?: number }>(), { size: 20 })
 const paths: Record<string, string> = {
+  pomodoro: 'M9 2h6M12 2v3M18 5l2 2M12 9v5l3 2M21 14a9 9 0 1 1-18 0 9 9 0 0 1 18 0',
+  calendar: 'M3 5h18v16H3ZM7 3v4M17 3v4M3 10h18M7 14h2M13 14h2M7 18h2',
+  weather: 'M8 3v2M2 9h2M3 4l2 2M12 5l2-2M12 10a4 4 0 1 0-7 3M6 20a4 4 0 1 1 0-8 6 6 0 0 1 11-1 4.5 4.5 0 1 1 1 9Z',
+  countdown: 'M6 2h12M6 22h12M7 2v5l10 10v5M17 2v5L7 17v5',
+  ambient: 'M4 10v4M8 6v12M12 3v18M16 6v12M20 10v4',
   plus: 'M12 5v14M5 12h14', close: 'm6 6 12 12M6 18 18 6', search: 'm21 21-5-5M18 10a8 8 0 1 1-16 0 8 8 0 0 1 16 0',
   edit: 'm16 3 5 5-12 12-6 1 1-6ZM13 6l5 5', check: 'm5 12 4 4L19 6', clock: 'M12 8v5l3 2M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0',
   hafez: 'M12 5v16M12 5C8 2 4 3 2 4v15c4-2 7-1 10 2 3-3 6-4 10-2V4c-3-1-7-2-10 1',

@@ -5,6 +5,11 @@ export type WidgetId =
   | 'quick-links'
   | 'hafez'
   | 'todo'
+  | 'pomodoro'
+  | 'calendar'
+  | 'weather'
+  | 'countdown'
+  | 'ambient'
 
 export interface WidgetPosition {
   x: number

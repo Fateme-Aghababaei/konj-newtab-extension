@@ -12,6 +12,11 @@ const definitions: WidgetDefinition[] = [
   { type: 'quick-links', title: 'widgets.quick-links.title', description: 'widgets.quick-links.description', defaultSize: { w: 8, h: 2 }, minSize: { w: 4, h: 2 }, defaultSettings: { links: [{ id: 'wiki', title: 'ویکی‌پدیا', url: 'https://fa.wikipedia.org' }, { id: 'aparat', title: 'آپارات', url: 'https://www.aparat.com' }, { id: 'github', title: 'گیت‌هاب', url: 'https://github.com' }] } },
   { type: 'greeting', title: 'widgets.greeting.title', description: 'widgets.greeting.description', defaultSize: { w: 4, h: 2 }, minSize: { w: 3, h: 2 }, defaultSettings: { note: '' } },
   { type: 'search', title: 'widgets.search.title', description: 'widgets.search.description', defaultSize: { w: 8, h: 2 }, minSize: { w: 4, h: 2 }, defaultSettings: {} },
+  { type: 'pomodoro', title: 'widgets.pomodoro.title', description: 'widgets.pomodoro.description', defaultSize: { w: 4, h: 4 }, minSize: { w: 3, h: 3 }, defaultSettings: {} },
+  { type: 'calendar', title: 'widgets.calendar.title', description: 'widgets.calendar.description', defaultSize: { w: 6, h: 5 }, minSize: { w: 3, h: 3 }, defaultSettings: {} },
+  { type: 'weather', title: 'widgets.weather.title', description: 'widgets.weather.description', defaultSize: { w: 4, h: 4 }, minSize: { w: 3, h: 3 }, defaultSettings: {} },
+  { type: 'countdown', title: 'widgets.countdown.title', description: 'widgets.countdown.description', defaultSize: { w: 4, h: 4 }, minSize: { w: 3, h: 3 }, defaultSettings: {} },
+  { type: 'ambient', title: 'widgets.ambient.title', description: 'widgets.ambient.description', defaultSize: { w: 4, h: 4 }, minSize: { w: 3, h: 3 }, defaultSettings: {} },
 ]
 interface Preferences { language: 'fa' | 'en'; name: string; theme: Theme; opaque: boolean; timeZone: string }
 interface Saved { instances: WidgetInstance[]; preferences: Preferences }
