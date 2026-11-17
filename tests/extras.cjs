@@ -1,7 +1,7 @@
 const { chromium } = require('playwright');
 const assert = require('node:assert/strict');
 (async () => {
- const browser = await chromium.launch({channel:'chrome',headless:true});
+ const browser = await chromium.launch({ channel: 'chrome', headless: true }).catch(() => chromium.launch({ headless: true }));
  try {
  const page = await browser.newPage({viewport:{width:1440,height:900}});
  const errors=[]; page.on('pageerror', e=>errors.push(e.message));
@@ -32,7 +32,7 @@ const assert = require('node:assert/strict');
  const ambient=page.locator('.widget-ambient');await ambient.getByRole('button',{name:'Play',exact:true}).click();await ambient.getByRole('button',{name:'Pause',exact:true}).waitFor();await ambient.getByRole('button',{name:'Sea',exact:true}).click();await ambient.getByRole('button',{name:'Pause',exact:true}).click();
  await page.reload();await countdown.getByText('Our trip',{exact:true}).waitFor();await calendar.locator('.occasion').filter({hasText:'Birthday'}).waitFor();assert.equal(await ambient.getByRole('button',{name:'Sea',exact:true}).getAttribute('aria-pressed'),'true');await ambient.getByRole('button',{name:'Play',exact:true}).waitFor();
  for(const width of [390,1440]){await page.setViewportSize({width,height:844});await page.waitForTimeout(150);assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false);}
- await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('konj-state'));s.data.preferences.language='fa';localStorage.setItem('konj-state',JSON.stringify(s));});await page.reload();await page.locator('html[dir="rtl"]').waitFor();assert.equal(await page.locator('.widget-calendar .calendar-grid button').count()>=29,true);assert.equal(await page.locator('.widget').count(),10);
+ await page.evaluate(()=>{const s=JSON.parse(localStorage.getItem('konj-state'));s.data.preferences.language='fa';localStorage.setItem('konj-state',JSON.stringify(s));});await page.reload();await page.locator('html[dir="rtl"]').waitFor();assert.equal(await page.locator('.widget-calendar .calendar-grid button').count()>=29,true);assert.equal(await page.locator('.widget').count(),12);
  assert.deepEqual(errors,[]);console.log('PASS: catalog, timer persistence/completion, countdown, occasions, calendar navigation, weather success/failure (mocked), audio controls, persistence, mobile, Persian');
  } finally { await browser.close(); }
 })().catch(e=>{console.error(e);process.exit(1)});

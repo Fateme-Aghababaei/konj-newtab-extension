@@ -13,6 +13,7 @@
     "test:extras": "node tests/extras.cjs"
   },
   "dependencies": {
+    "@fontsource/lalezar": "^5.3.0",
     "@fontsource/vazirmatn": "^5.3.0",
     "grid-layout-plus": "^1.1.1",
     "pinia": "^4.0.3",

@@ -1,7 +1,7 @@
 {
   "brand": {
     "name": "Konj",
-    "tagline": "A little space for you",
+    "tagline": "New tab page",
     "home": "Konj home"
   },
   "nav": {
@@ -12,32 +12,37 @@
     "settings": "Settings"
   },
   "welcome": {
-    "kicker": "A new tab, a fresh start",
-    "subtitle": "A little calmer. A little more you.",
     "morning": "Good morning",
-    "day": "Have a lovely day",
+    "day": "Good afternoon",
     "evening": "Good evening",
-    "night": "Have a peaceful night",
-    "comma": ", "
+    "night": "Good night",
+    "comma": ", ",
+    "phase": {
+      "midnight": "Midnight",
+      "dawn": "Dawn (sahar)",
+      "morning": "Morning",
+      "noon": "Noon",
+      "afternoon": "Afternoon",
+      "sunset": "Sunset",
+      "evening": "Night"
+    },
+    "nowruz": "{n} days to Nowruz",
+    "nowruzToday": "Happy Nowruz!",
+    "proverb": "Proverb of the day"
   },
   "dashboard": {
-    "edit": "Make it your own",
-    "title": "Your corner",
-    "hint": "Drag a title to move; drag a corner to resize.",
-    "subtitle": "Little things, brighter days",
-    "unavailable": "Storage unavailable",
-    "personal": "Your personal space",
-    "keyboard": "Use each widget’s up and down buttons to reorder with a keyboard or on mobile."
+    "hint": "Drag a widget by its title to move it, or by its bottom corner to resize it.",
+    "keyboard": "With a keyboard or on mobile, use the up and down buttons."
   },
   "footer": {
-    "text": "For the moments between work and life",
-    "personalize": "Make yourself at home"
+    "text": "Everything is saved in this browser only.",
+    "personalize": "Change colours and language"
   },
   "notice": {
     "removed": "Widget removed. You can undo this.",
     "removedShort": "Widget removed.",
     "restored": "Widget restored.",
-    "added": "{title} added to your dashboard."
+    "added": "“{title}” added."
   },
   "common": {
     "undo": "Undo",
@@ -49,37 +54,32 @@
     "remove": "Remove {title}"
   },
   "panel": {
-    "kicker": "Just the way you like it",
-    "widgets": "Add something good",
-    "settings": "Your very own Konj",
-    "description": "Small widgets for a better day. Rearrange them whenever you like.",
-    "count": "{count} on your dashboard",
+    "widgets": "Add a widget",
+    "settings": "Settings",
+    "description": "You can add any widget more than once, then move it around with “Edit layout”.",
     "offline": "Weather, search and external links need an internet connection. Other widgets work offline."
   },
   "settings": {
-    "name": "What should we call you?",
-    "namePlaceholder": "Your name (optional)",
-    "theme": "Set the mood",
-    "dusk": "Desert dusk",
-    "forest": "Forest mist",
-    "night": "Indigo night",
+    "name": "Your name",
+    "namePlaceholder": "Used in the greeting (optional)",
+    "theme": "Colours",
     "timeZone": "Time zone",
     "tehran": "Tehran",
     "local": "My device’s time",
-    "opaque": "Reduce transparency",
-    "opaqueHint": "More opaque surfaces for easier reading",
     "privacy": "Your layout, notes and settings are saved automatically in this browser only. Search is powered by Google.",
     "language": "Language",
-    "carpet": "Persian carpet",
-    "tea": "Amber tea",
-    "sea": "Caspian blue"
+    "kaghaz": "Paper",
+    "kahgel": "Kahgel clay",
+    "firoozeh": "Turquoise",
+    "lajevard": "Lapis",
+    "shab": "Night",
+    "anar": "Pomegranate"
   },
   "empty": {
-    "title": "This corner is yours",
-    "hint": "Add your first widget and make yourself at home."
+    "title": "Nothing here yet",
+    "hint": "Add your first widget."
   },
   "grid": {
-    "poetry": "A moment of poetry",
     "previous": "Move earlier",
     "next": "Move later",
     "resize": "Resize {title}",
@@ -91,15 +91,16 @@
   },
   "poem": {
     "source": "From the Divan of Hafez",
-    "next": "Another couplet"
+    "next": "Draw a fal",
+    "intent": "Make a wish…"
   },
   "todo": {
-    "empty": "Room for a fresh start",
-    "hint": "Write down your first step for today.",
+    "empty": "Pour some tea and write down the first thing for today.",
     "placeholder": "A new task…",
     "input": "New task",
     "add": "Add task",
-    "count": "{done} of {total} tasks completed"
+    "count": "{done} of {total} tasks completed",
+    "allDone": "All done! Well done 🌱"
   },
   "links": {
     "name": "Site name",
@@ -113,12 +114,11 @@
   },
   "note": {
     "label": "Little note",
-    "placeholder": "Give your thoughts a little room…",
-    "hint": "Just for you, right here."
+    "placeholder": "Anything you want to remember…"
   },
   "search": {
     "label": "Search Google",
-    "placeholder": "What are you looking for today?",
+    "placeholder": "Search Google",
     "submit": "Search"
   },
   "storage": {
@@ -128,47 +128,51 @@
   "widgets": {
     "clock": {
       "title": "Clock & calendar",
-      "description": "The time, with a Persian calendar date."
+      "description": "The time, with the solar Hijri and Gregorian dates."
     },
     "hafez": {
-      "title": "A moment with Hafez",
-      "description": "Pause, take a breath, and enjoy Persian poetry."
+      "title": "Fal-e Hafez",
+      "description": "Make a wish and draw a couplet from Hafez."
     },
     "todo": {
       "title": "Today’s tasks",
-      "description": "Small steps for the day ahead."
+      "description": "A simple list of things to do today."
     },
     "quick-links": {
       "title": "Shortcuts",
-      "description": "Your favorite sites, just a click away."
+      "description": "Sites you visit every day."
     },
     "greeting": {
       "title": "Little note",
-      "description": "A thought, a sentence, or something to remember."
+      "description": "Room for a thought or a short note."
     },
     "search": {
       "title": "Search",
-      "description": "A quick way to find what’s on your mind."
+      "description": "Google search."
     },
     "pomodoro": {
       "title": "Pomodoro timer",
-      "description": "Focus, then pause for a short break."
+      "description": "25 minutes of work, 5 minutes of rest."
     },
     "calendar": {
       "title": "Calendar & occasions",
-      "description": "Persian and Gregorian months with your personal occasions."
+      "description": "Solar Hijri and Gregorian months with official holidays and your own dates."
     },
     "weather": {
       "title": "Weather",
-      "description": "Current weather for a city you choose."
+      "description": "Current temperature for a city you choose."
     },
     "countdown": {
       "title": "Countdown",
-      "description": "Count the days to something special."
+      "description": "Days left until an important date."
     },
     "ambient": {
       "title": "Ambient sounds",
-      "description": "Rain, sea, and brown noise for a calmer space."
+      "description": "Rain, sea or brown noise."
+    },
+    "welcome": {
+      "title": "Welcome",
+      "description": "A postage stamp of Tehran under the sky at this hour, with a greeting, the date, occasions, a Nowruz countdown and a proverb of the day."
     }
   },
   "extras": {
@@ -216,6 +220,7 @@
     "refresh": "Refresh",
     "changeCity": "Change city",
     "loading": "Loading…",
-    "weatherCredit": "Weather by Open-Meteo"
+    "weatherCredit": "Weather by Open-Meteo",
+    "calendarNote": "Fridays and official solar holidays are in red. Lunar holidays are not shown."
   }
 }

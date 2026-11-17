@@ -7,7 +7,7 @@ function messageKeys(value, prefix = '') {
 }
 assert.deepEqual(messageKeys(require('../src/locales/en.json')), messageKeys(require('../src/locales/fa.json')));
 (async () => {
-  const browser = await chromium.launch({ channel: 'chrome', headless: true });
+  const browser = await chromium.launch({ channel: 'chrome', headless: true }).catch(() => chromium.launch({ headless: true }));
   try {
     const page = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
     const errors = [];
@@ -44,7 +44,7 @@ assert.deepEqual(messageKeys(require('../src/locales/en.json')), messageKeys(req
     await page.getByRole('combobox', { name: 'زبان' }).click();
     await page.getByRole('option', { name: 'English', exact: true }).click();
     assert.equal(await page.locator('html').getAttribute('dir'), 'ltr');
-    await page.getByRole('heading', { name: 'Your very own Konj' }).waitFor();
+    await page.getByRole('heading', { name: 'Settings', exact: true }).waitFor();
     await checkChevron('ltr');
     await page.screenshot({ path: join(tmpdir(), 'konj-english-settings.png'), fullPage: true });
     await page.keyboard.press('Escape');
@@ -61,11 +61,11 @@ assert.deepEqual(messageKeys(require('../src/locales/en.json')), messageKeys(req
     assert.equal(saved.preferences.language, 'en');
     assert.deepEqual(saved.instances.slice(0, initial.length), initial);
     await page.getByRole('button', { name: 'Edit layout', exact: true }).click();
-    const clock = page.locator('.widget-clock').first();
-    const resizer = clock.locator('.resize-handle');
+    // The tasks widget starts at the inline start with room to grow.
+    const resizer = page.locator('.widget-todo .resize-handle').first();
     await resizer.focus(); await page.keyboard.press('ArrowRight');
-    const resized = await page.evaluate(() => JSON.parse(localStorage.getItem('konj-state')).data.instances[0].position.w);
-    assert.equal(resized, initial[0].position.w + 1);
+    const resized = await page.evaluate(() => JSON.parse(localStorage.getItem('konj-state')).data.instances.find(w => w.type === 'todo').position.w);
+    assert.equal(resized, initial.find(w => w.type === 'todo').position.w + 1);
     await resizer.focus(); await page.keyboard.press('ArrowLeft');
     await page.getByRole('button', { name: 'Done editing', exact: true }).click();
     await page.setViewportSize({ width: 390, height: 844 });

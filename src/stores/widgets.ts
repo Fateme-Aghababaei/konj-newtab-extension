@@ -1,19 +1,21 @@
 import { computed, ref, watch } from 'vue'
 import { defineStore } from 'pinia'
 import type { WidgetDefinition, WidgetInstance, WidgetId, WidgetPosition } from '@/types/widget'
-import { isTheme, type Theme } from '@/data/themes'
+import { toTheme, type Theme } from '@/data/themes'
 import { i18n } from '@/i18n'
 import { getStorage, setStorage } from '@/utils/storage'
 
+// Sizes are in grid units: 12 columns, rows of ROW_HEIGHT px (see WidgetGrid.vue).
 const definitions: WidgetDefinition[] = [
+  { type: 'welcome', title: 'widgets.welcome.title', description: 'widgets.welcome.description', defaultSize: { w: 8, h: 3 }, minSize: { w: 4, h: 2 }, defaultSettings: {} },
   { type: 'clock', title: 'widgets.clock.title', description: 'widgets.clock.description', defaultSize: { w: 4, h: 3 }, minSize: { w: 3, h: 3 }, defaultSettings: {} },
-  { type: 'hafez', title: 'widgets.hafez.title', description: 'widgets.hafez.description', defaultSize: { w: 4, h: 3 }, minSize: { w: 3, h: 3 }, defaultSettings: {} },
+  { type: 'hafez', title: 'widgets.hafez.title', description: 'widgets.hafez.description', defaultSize: { w: 4, h: 4 }, minSize: { w: 3, h: 3 }, defaultSettings: {} },
   { type: 'todo', title: 'widgets.todo.title', description: 'widgets.todo.description', defaultSize: { w: 4, h: 3 }, minSize: { w: 3, h: 3 }, defaultSettings: { tasks: [] } },
   { type: 'quick-links', title: 'widgets.quick-links.title', description: 'widgets.quick-links.description', defaultSize: { w: 8, h: 2 }, minSize: { w: 4, h: 2 }, defaultSettings: { links: [{ id: 'wiki', title: 'ویکی‌پدیا', url: 'https://fa.wikipedia.org' }, { id: 'aparat', title: 'آپارات', url: 'https://www.aparat.com' }, { id: 'github', title: 'گیت‌هاب', url: 'https://github.com' }] } },
   { type: 'greeting', title: 'widgets.greeting.title', description: 'widgets.greeting.description', defaultSize: { w: 4, h: 2 }, minSize: { w: 3, h: 2 }, defaultSettings: { note: '' } },
-  { type: 'search', title: 'widgets.search.title', description: 'widgets.search.description', defaultSize: { w: 8, h: 2 }, minSize: { w: 4, h: 2 }, defaultSettings: {} },
+  { type: 'search', title: 'widgets.search.title', description: 'widgets.search.description', defaultSize: { w: 8, h: 1 }, minSize: { w: 4, h: 1 }, defaultSettings: {} },
   { type: 'pomodoro', title: 'widgets.pomodoro.title', description: 'widgets.pomodoro.description', defaultSize: { w: 4, h: 4 }, minSize: { w: 3, h: 3 }, defaultSettings: {} },
-  { type: 'calendar', title: 'widgets.calendar.title', description: 'widgets.calendar.description', defaultSize: { w: 6, h: 5 }, minSize: { w: 3, h: 3 }, defaultSettings: {} },
+  { type: 'calendar', title: 'widgets.calendar.title', description: 'widgets.calendar.description', defaultSize: { w: 4, h: 7 }, minSize: { w: 3, h: 6 }, defaultSettings: {} },
   { type: 'weather', title: 'widgets.weather.title', description: 'widgets.weather.description', defaultSize: { w: 4, h: 4 }, minSize: { w: 3, h: 3 }, defaultSettings: {} },
   { type: 'countdown', title: 'widgets.countdown.title', description: 'widgets.countdown.description', defaultSize: { w: 4, h: 4 }, minSize: { w: 3, h: 3 }, defaultSettings: {} },
   { type: 'ambient', title: 'widgets.ambient.title', description: 'widgets.ambient.description', defaultSize: { w: 4, h: 4 }, minSize: { w: 3, h: 3 }, defaultSettings: {} },
@@ -22,7 +24,7 @@ interface Preferences { language: 'fa' | 'en'; name: string; theme: Theme; opaqu
 interface Saved { instances: WidgetInstance[]; preferences: Preferences }
 export const useWidgetsStore = defineStore('widgets', () => {
   const instances = ref<WidgetInstance[]>([])
-  const preferences = ref<Preferences>({ language: 'fa', name: '', theme: 'dusk', opaque: false, timeZone: 'Asia/Tehran' })
+  const preferences = ref<Preferences>({ language: 'fa', name: '', theme: 'kaghaz', opaque: false, timeZone: 'Asia/Tehran' })
   const storageError = ref('')
   let canSave = true
   const localizedDefinitions = computed(() => definitions.map(d => ({ ...d, title: i18n.global.t(d.title), description: i18n.global.t(d.description!) })))
@@ -40,11 +42,14 @@ export const useWidgetsStore = defineStore('widgets', () => {
       instances.value = saved.instances
       const p = saved.preferences
       if (p) {
-        preferences.value = { language: p.language === 'en' ? 'en' : 'fa', name: typeof p.name === 'string' ? p.name : '', theme: isTheme(p.theme) ? p.theme : 'dusk', opaque: p.opaque === true, timeZone: p.timeZone === 'local' ? 'local' : 'Asia/Tehran' }
+        preferences.value = { language: p.language === 'en' ? 'en' : 'fa', name: typeof p.name === 'string' ? p.name : '', theme: toTheme(p.theme), opaque: p.opaque === true, timeZone: p.timeZone === 'local' ? 'local' : 'Asia/Tehran' }
       }
     } else {
-      addWidget('clock', { x: 0, y: 0 }); addWidget('hafez', { x: 4, y: 0 }); addWidget('todo', { x: 8, y: 0 })
-      addWidget('quick-links', { x: 0, y: 3 }); addWidget('greeting', { x: 8, y: 3 })
+      // The whole page is widgets: greeting and search included.
+      addWidget('welcome', { x: 0, y: 0 }); addWidget('clock', { x: 8, y: 0 })
+      addWidget('search', { x: 0, y: 3 })
+      addWidget('quick-links', { x: 0, y: 4, h: 2 }); addWidget('hafez', { x: 8, y: 3 })
+      addWidget('todo', { x: 0, y: 6, w: 4, h: 4 }); addWidget('greeting', { x: 4, y: 6, w: 4, h: 4 })
     }
   } catch {
     canSave = false

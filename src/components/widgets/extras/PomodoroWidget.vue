@@ -4,14 +4,15 @@ import { useI18n } from 'vue-i18n'
 import { useWidgetsStore } from '@/stores/widgets'
 import type { WidgetInstance } from '@/types/widget'
 const props = defineProps<{ widget: WidgetInstance }>()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const store = useWidgetsStore()
 const now = ref(Date.now())
 const mode = computed(() => props.widget.settings.mode === 'break' ? 'break' : 'focus')
 const duration = computed(() => (mode.value === 'focus' ? 25 : 5) * 60)
 const end = computed(() => Number(props.widget.settings.endsAt) || 0)
 const remaining = computed(() => end.value ? Math.max(0, Math.ceil((end.value - now.value) / 1000)) : Math.max(0, Number(props.widget.settings.remaining ?? duration.value)))
-const display = computed(() => `${Math.floor(remaining.value / 60).toString().padStart(2, '0')}:${(remaining.value % 60).toString().padStart(2, '0')}`)
+const two = (n: number) => n.toLocaleString(locale.value, { minimumIntegerDigits: 2, useGrouping: false })
+const display = computed(() => `${two(Math.floor(remaining.value / 60))}:${two(remaining.value % 60)}`)
 function save(data: Record<string, unknown>) { store.updateSettings(props.widget.id, data) }
 function toggle() { now.value = Date.now(); if (end.value) save({ remaining: remaining.value, endsAt: 0 }); else save({ endsAt: now.value + (remaining.value || duration.value) * 1000, completed: false }) }
 function reset(value = mode.value) { save({ mode: value, remaining: (value === 'focus' ? 25 : 5) * 60, endsAt: 0, completed: false }) }

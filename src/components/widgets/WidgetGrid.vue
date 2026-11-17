@@ -10,6 +10,11 @@ const { t, locale } = useI18n()
 const props = defineProps<{ editing: boolean }>()
 const emit = defineEmits<{ remove: [widget: WidgetInstance]; add: [] }>()
 const store = useWidgetsStore()
+// Grid metrics. Keep the resize maths below in sync with these.
+const ROW_HEIGHT = 64
+const GAP = 16
+// Widgets that read better without a title bar (it still appears while arranging).
+const chromeless = new Set(['welcome', 'search'])
 const rtl = computed(() => locale.value === 'fa')
 watch(locale, () => { resizing.value = undefined })
 const compact = ref(window.innerWidth < 760)
@@ -22,7 +27,7 @@ function startResize(event: PointerEvent, widget: WidgetInstance) {
   if (event.button !== 0) return
   const button = event.currentTarget as HTMLElement
   const width = button.closest('.widget-wrap')!.getBoundingClientRect().width
-  resizing.value = { id: widget.id, startX: event.clientX, startY: event.clientY, column: (width + 20) / widget.position.w, w: widget.position.w, h: widget.position.h, previewW: widget.position.w, previewH: widget.position.h }
+  resizing.value = { id: widget.id, startX: event.clientX, startY: event.clientY, column: (width + GAP) / widget.position.w, w: widget.position.w, h: widget.position.h, previewW: widget.position.w, previewH: widget.position.h }
   button.setPointerCapture(event.pointerId)
   event.preventDefault()
 }
@@ -31,7 +36,7 @@ function resizePreview(event: PointerEvent, widget: WidgetInstance) {
   if (!value || value.id !== widget.id) return
   const min = store.getDefinition(widget.type)!.minSize!
   value.previewW = Math.max(min.w, Math.min(12 - widget.position.x, value.w + Math.round(((event.clientX - value.startX) * (rtl.value ? -1 : 1)) / value.column)))
-  value.previewH = Math.max(min.h, value.h + Math.round((event.clientY - value.startY) / 106))
+  value.previewH = Math.max(min.h, value.h + Math.round((event.clientY - value.startY) / (ROW_HEIGHT + GAP)))
 }
 function finishResize(widget: WidgetInstance) {
   const value = resizing.value
@@ -62,11 +67,11 @@ function move(widget: WidgetInstance, direction: number) {
 }
 </script>
 <template>
-  <section v-if="!store.instances.length" class="empty-dashboard surface"><AppIcon name="quick-links" :size="36" /><h2>{{ t('empty.title') }}</h2><p>{{ t('empty.hint') }}</p><button class="primary-button" @click="emit('add')"><AppIcon name="plus" />{{ t('nav.add') }}</button></section>
-  <component :is="compact ? 'div' : GridLayout" v-else :key="`${compact ? 'mobile' : 'desktop'}-${locale}`" :layout="layout" :col-num="12" :row-height="86" :margin="[20, 20]" :is-draggable="editing" :is-resizable="false" :vertical-compact="true" :is-mirrored="false" :use-css-transforms="true" :class="['widget-grid', { 'mobile-grid': compact, 'is-editing': editing }]" @layout-updated="updateLayout">
+  <section v-if="!store.instances.length" class="empty-dashboard"><AppIcon name="quick-links" :size="32" /><h2>{{ t('empty.title') }}</h2><p>{{ t('empty.hint') }}</p><button class="primary-button" @click="emit('add')"><AppIcon name="plus" />{{ t('nav.add') }}</button></section>
+  <component :is="compact ? 'div' : GridLayout" v-else :key="`${compact ? 'mobile' : 'desktop'}-${locale}`" :layout="layout" :col-num="12" :row-height="ROW_HEIGHT" :margin="[GAP, GAP]" :is-draggable="editing" :is-resizable="false" :vertical-compact="true" :is-mirrored="false" :use-css-transforms="true" :class="['widget-grid', { 'mobile-grid': compact, 'is-editing': editing }]" @layout-updated="updateLayout">
     <component :is="compact ? 'div' : GridItem" v-for="widget in (compact ? ordered : store.instances)" :key="widget.id" :i="widget.id" :x="widget.position.x" :y="widget.position.y" :w="widget.position.w" :h="widget.position.h" :min-w="store.getDefinition(widget.type)?.minSize?.w" :min-h="store.getDefinition(widget.type)?.minSize?.h" :max-w="12" drag-allow-from=".drag-handle" drag-ignore-from="button, input, textarea, a" :class="['widget-wrap', `widget-${widget.type}`]">
-      <article class="widget surface" :style="resizing?.id === widget.id ? { width: `${resizing.previewW * resizing.column - 20}px`, height: `${resizing.previewH * 106 - 20}px` } : undefined" :aria-label="store.getDefinition(widget.type)?.title">
-        <header class="widget-header"><div :class="['widget-title', { 'drag-handle': editing }] "><AppIcon :name="editing ? 'drag' : widget.type" :size="18" /><h2>{{ store.getDefinition(widget.type)?.title }}</h2></div><span v-if="!editing && widget.type === 'hafez'" class="eyebrow">{{ t('grid.poetry') }}</span><div v-if="editing" class="widget-actions"><button class="icon-button small" :disabled="ordered[0]?.id === widget.id" :aria-label="t('grid.previous')" @click="move(widget, -1)"><AppIcon name="up" :size="16" /></button><button class="icon-button small" :disabled="ordered[ordered.length - 1]?.id === widget.id" :aria-label="t('grid.next')" @click="move(widget, 1)"><AppIcon name="down" :size="16" /></button><button class="icon-button small danger" :aria-label="t('common.remove', { title: store.getDefinition(widget.type)?.title })" @click="emit('remove', widget)"><AppIcon name="close" :size="18" /></button></div></header>
+      <article :class="['widget', { bare: chromeless.has(widget.type), chromeless: chromeless.has(widget.type) && !editing }]" :style="resizing?.id === widget.id ? { width: `${resizing.previewW * resizing.column - GAP}px`, height: `${resizing.previewH * (ROW_HEIGHT + GAP) - GAP}px` } : undefined" :aria-label="store.getDefinition(widget.type)?.title">
+        <header v-if="editing || !chromeless.has(widget.type)" class="widget-header"><div :class="['widget-title', { 'drag-handle': editing }] "><AppIcon :name="editing ? 'drag' : widget.type" :size="18" /><h2>{{ store.getDefinition(widget.type)?.title }}</h2></div><div v-if="editing" class="widget-actions"><button class="icon-button small" :disabled="ordered[0]?.id === widget.id" :aria-label="t('grid.previous')" @click="move(widget, -1)"><AppIcon name="up" :size="16" /></button><button class="icon-button small" :disabled="ordered[ordered.length - 1]?.id === widget.id" :aria-label="t('grid.next')" @click="move(widget, 1)"><AppIcon name="down" :size="16" /></button><button class="icon-button small danger" :aria-label="t('common.remove', { title: store.getDefinition(widget.type)?.title })" @click="emit('remove', widget)"><AppIcon name="close" :size="18" /></button></div></header>
         <WidgetContent :widget="widget" />
         <button v-if="editing && !compact" class="resize-handle" :aria-label="t('grid.resize', { title: store.getDefinition(widget.type)?.title })" :title="t('grid.resizeHint')" @pointerdown.stop="startResize($event, widget)" @pointermove="resizePreview($event, widget)" @pointerup="finishResize(widget)" @pointercancel="resizing = undefined" @lostpointercapture="resizing = undefined" @keydown="keyboardResize($event, widget)" />
       </article>

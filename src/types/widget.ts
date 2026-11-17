@@ -1,4 +1,5 @@
 export type WidgetId =
+  | 'welcome'
   | 'clock'
   | 'greeting'
   | 'search'

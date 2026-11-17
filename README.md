@@ -1,6 +1,6 @@
 # کنج · Konj
 
-A Persian-first new-tab dashboard built with Vue, Pinia and Vite. Includes a solar Hijri date and clock, selected Hafez couplets, tasks, notes, custom shortcuts and Google search.
+A Persian-first new-tab page made of widgets, built with Vue, Pinia and Vite.
 
 ## Run locally
 
@@ -21,28 +21,50 @@ In Chrome, open `chrome://extensions`, enable **Developer mode**, choose **Load 
 
 `npm run dev:extension` enables CRXJS extension development when needed; keep that server running while using its development build. For the regular preview use `npm run dev`.
 
-## Dashboard flow
+## Dashboard
 
-- **افزودن ابزارک** opens the widget library; multiple instances are supported.
-- **چیدمان** enables dragging by widget titles, resizing from the bottom-left corner, and removal. **پایان ویرایش** locks the layout again.
-- Arrow controls provide keyboard and mobile reordering. The resize handle also supports keyboard arrow keys. These arrange widgets vertically in the new reading order.
-- Removed widgets can be restored with **بازگردانی**. Undo is available for the most recently removed widget until dismissed or reloaded.
-- Settings offer Persian/English language switching, a name, six palettes (desert dusk, forest mist, indigo night, Persian carpet, amber tea and Caspian blue), Tehran/device time, and reduced transparency. Language changes save immediately and switch layout direction, UI labels, numerals and date formatting. Hafez verses remain in Persian; user content is preserved.
-- Smaller screens display a single column without changing saved desktop positions.
+Everything on the page is a widget, including the greeting and the search bar. **افزودن ابزارک** opens the widget list (any widget can be added more than once) and **چیدمان** switches to layout mode: drag a widget by its title, resize it from the bottom corner, reorder with the arrow buttons (keyboard and mobile), or remove it. Removed widgets can be brought back with **بازگردانی**.
 
-State is stored locally in this browser using `localStorage`. The web preview and installed extension have separate storage. Removing every widget intentionally leaves an empty dashboard. No account, tracking, server, remote fonts or API keys are required. Search submits to Google; shortcuts navigate to the user-specified site. Hafez is a small offline selection of couplets, not a complete divination collection. Clearing browser/extension storage removes saved data.
+Widgets: welcome (greeting, today's solar Hijri date and any fixed occasion), clock, Hafez, tasks, shortcuts, note, search, Pomodoro, calendar, weather, countdown and ambient sound.
+
+The calendar prints Fridays and official holidays of the solar calendar in red, the way Iranian wall calendars do, and marks cultural dates such as Yalda and Hafez Day. Lunar (Hijri) holidays move every year and are not included.
+
+Settings: Persian/English (switches direction, numerals and date formats; Hafez stays in Persian), your name, six colour schemes (کاغذ، کاهگل، فیروزه، لاجورد، شب، انار) and Tehran or device time. Saved dashboards from earlier versions load as before, and old theme names map to the closest new one.
+
+State lives in `localStorage` in this browser only. The web preview and the installed extension keep separate storage. No account, tracking, server, remote fonts or API keys. Search goes to Google, the weather widget calls Open-Meteo, and shortcuts open the sites you add.
 
 ## Design
 
-The visual direction adapts [Apple's Liquid Glass guidance](https://developer.apple.com/documentation/technologyoverviews/adopting-liquid-glass) to the web: glass for the main controls, restrained highlights, legible content surfaces, rounded nested forms, and reduced-motion/transparency support. This is a CSS interpretation, not Apple's native Liquid Glass renderer. Persian typography, RTL interaction, a solar Hijri date and desert/forest/night palettes ground it in Iranian culture.
+Contemporary and secular Persian: closer to Tehran street signs, cinema posters and a glass of tea than to tilework.
+
+- **Logo:** a note with its corner folded over (a literal «کنج», *corner*) and «ک» in Lalezar (`src/components/ui/KonjMark.vue`). Extension icons are in `public/icons/`.
+- **Fonts:**
+  - **Lalezar**, a Persian display face named after Tehran's old cinema street, for the greeting, the clock and the wordmark.
+  - **Vazirmatn** for everything else, including Hafez.
+  - Both are bundled locally, so the extension works offline.
+- **Colours:** six schemes named after everyday Iranian things (کاغذ، کاهگل، فیروزه، لاجورد، شب، انار). Each has a main colour and a playful second one: pomegranate with pistachio, clay with teal, turquoise with saffron, and so on.
+- **Cards:** rounded, with a small solid lip underneath, and they lift slightly on hover.
+- **Welcome stamp:** a postage stamp of Tehran (Damavand, Azadi Tower, Milad Tower) under a sky that follows the time of day. The sun and moon move across it, the moon shows its actual phase, and stars and city windows light up at night. A postmark carries today's date. Beside it:
+  - the greeting in Lalezar
+  - the Persian name for the part of the day (سحر، صبح، ظهر، عصر، غروب، شب، نیمه‌شب)
+  - the date and any occasion
+  - a countdown to Nowruz
+  - a proverb of the day (`src/data/proverbs.ts`)
+- **Fal-e Hafez:** «فال بگیر» pauses for a moment («نیت کنید…») and turns up a different couplet.
+- **Small rewards:**
+  - An empty task list shows a steaming estekan of tea.
+  - Finishing a task sends out a little confetti burst, and the list congratulates you when everything is done.
+  - Widgets rise in one by one on load.
+- **Reduced motion:** all of this is turned off for people who choose "reduce motion" in their system settings.
 
 ## Verify
 
 ```sh
 npm run build
-# With the development server running and Google Chrome installed:
+# With the development server running (uses Google Chrome if installed, otherwise Playwright's Chromium):
 npm run test:dashboard
 npm run test:i18n
+npm run test:extras
 # If the server uses another address:
 BASE_URL=http://127.0.0.1:5180 npm run test:dashboard
 ```
